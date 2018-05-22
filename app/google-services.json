@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "996103554750",
+    "firebase_url": "https://spotme-bf8a9.firebaseio.com",
+    "project_id": "spotme-bf8a9",
+    "storage_bucket": "spotme-bf8a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996103554750:android:0555f2ccaafa3c72",
+        "android_client_info": {
+          "package_name": "comspotme.wixsite.httpspavlokrykavskyj.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996103554750-5hio2k4f4bjp7buek763ku880dq0obk7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "comspotme.wixsite.httpspavlokrykavskyj.myapplication",
+            "certificate_hash": "b8470a5946caa016e5b8157e676f1e7e16a5de21"
+          }
+        },
+        {
+          "client_id": "996103554750-g9h8f1rm8jdtucgurli48ck4bk9co0g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA95hAU4lgZ73MTYZSWKqCvd_rIoQ9TLSM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996103554750-g9h8f1rm8jdtucgurli48ck4bk9co0g1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
