@@ -49,7 +49,7 @@ public class SpotMe extends AppCompatActivity {
                 maleDb.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        if(dataSnapshot.getKey().equals(user.getUid));
+                        if(dataSnapshot.getKey().equals(user.getUid()));
                     }
 
                     @Override
