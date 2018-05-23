@@ -30,12 +30,10 @@ public class SpotMe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_spot_me);
 
+        mAuth = FirebaseAuth.getInstance();
+
+        checkUserSex();
         al = new ArrayList < > ();
-        al.add("Joe");
-        al.add("Eric");
-        al.add("Pavlo");
-        al.add("Aqeel");
-        al.add("John");
 
         arrayAdapter = new ArrayAdapter < > (this, R.layout.item, R.id.helloText, al);
 
@@ -43,37 +41,6 @@ public class SpotMe extends AppCompatActivity {
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
-            public void checkUserSex() {
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference maleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Male");
-                maleDb.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        if(dataSnapshot.getKey().equals(user.getUid()));
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
@@ -96,13 +63,7 @@ public class SpotMe extends AppCompatActivity {
             }
 
             @Override
-            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-                al.add("SpotMe? ".concat(String.valueOf(i)));
-                arrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-                i++;
-            }
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {}
 
             @Override
             public void onScroll(float scrollProgressPercent) {}
@@ -114,6 +75,85 @@ public class SpotMe extends AppCompatActivity {
             public void onItemClicked(int itemPosition, Object dataObject) {
                 Toast.makeText(SpotMe.this, "Clicked!", Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+    private String userSex;
+    private String oppositeUserSex;
+    public void checkUserSex() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference maleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Male");
+        maleDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                if (dataSnapshot.getKey().equals(user.getUid())) {
+                    userSex = "Male";
+                    oppositeUserSex = "Female";
+                    getOppositeSexUsers();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        DatabaseReference femaleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Female");
+        femaleDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                if (dataSnapshot.getKey().equals(user.getUid())) {
+                    userSex = "Female";
+                    oppositeUserSex = "Male";
+                    getOppositeSexUsers();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    public void getOppositeSexUsers() {
+        DatabaseReference oppositeSexDb = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositeUserSex);
+        oppositeSexDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.exists()) {
+                    al.add(dataSnapshot.child("name").getValue().toString());
+                    arrayAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 

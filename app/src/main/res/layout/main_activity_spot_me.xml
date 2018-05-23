@@ -9,12 +9,13 @@
     android:layout_marginTop="15dp"
     android:layout_marginBottom="15dp"
     tools:context=".SpotMe">
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Out"
         android:onClick="logoutUser"/>
-    
+
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
         android:background="#ffeee9e2"
