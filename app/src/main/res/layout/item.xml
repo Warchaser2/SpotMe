@@ -18,7 +18,7 @@
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="50sp"
-        tools:text="SpotMe?" />
+        tools:text="SpotMe?"/>
 
     <View
         android:id="@+id/item_swipe_left_indicator"
@@ -26,7 +26,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
-        android:background="#A5F" />
+        android:background="#A5F"/>
 
     <View
         android:id="@+id/item_swipe_right_indicator"
@@ -35,6 +35,6 @@
         android:layout_height="20dp"
         android:layout_margin="10dp"
         android:layout_gravity="right"
-        android:background="#5AF" />
+        android:background="#5AF"/>
 
 </RelativeLayout>

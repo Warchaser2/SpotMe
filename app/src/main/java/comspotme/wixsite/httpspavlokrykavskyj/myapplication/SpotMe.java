@@ -1,11 +1,20 @@
 package comspotme.wixsite.httpspavlokrykavskyj.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -15,7 +24,7 @@ public class SpotMe extends AppCompatActivity {
     private ArrayList < String > al;
     private ArrayAdapter < String > arrayAdapter;
     private int i;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +43,37 @@ public class SpotMe extends AppCompatActivity {
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            public void checkUserSex() {
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference maleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Male");
+                maleDb.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        if(dataSnapshot.getKey().equals(user.getUid));
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
@@ -75,5 +115,13 @@ public class SpotMe extends AppCompatActivity {
                 Toast.makeText(SpotMe.this, "Clicked!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void logoutUser(View view) {
+        mAuth.signOut();
+        Intent intent = new Intent(SpotMe.this, LoginRegistrationActivity.class);
+        startActivity(intent);
+        finish();
+        return;
     }
 }
